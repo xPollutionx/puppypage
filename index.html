@@ -10,6 +10,11 @@ body {
     background: #111;
     color: #fff;
     font-family: Arial, sans-serif;
+    display: flex;
+}
+#content {
+    flex: 1;
+    padding: 30px;
 }
 #menu {
     position: fixed;
@@ -30,31 +35,29 @@ body {
     border-radius: 8px;
     cursor: pointer;
 }
-#content {
-    padding: 30px;
+iframe {
     width: calc(100% - 150px);
+    height: 100vh;
+    border: none;
 }
 </style>
 </head>
 <body>
+
+<iframe id="viewer" src=""></iframe>
+
 <div id="menu">
-    <a href="https://puppies.com/find-a-puppy/saint-bernard?advanced=true&price=100&price=700&sort_breed=mixed">
-        <img src="saint-bernard.png" alt="Saint Bernard" />
-    </a>
-    <a href="https://puppies.com/find-a-puppy/english-bulldog?advanced=true&price=100&price=700&sort_breed=mixed">
-        <img src="english-bulldog.png" alt="English Bulldog" />
-    </a>
-    <a href="https://puppies.com/find-a-puppy/basset-hound?advanced=true&price=100&price=700&sort_breed=mixed">
-        <img src="basset-hound.png" alt="Basset Hound" />
-    </a>
-    <a href="https://puppies.com/find-a-puppy/cavalier-king-charles-spaniel?advanced=true&price=100&price=700&sort_breed=mixed">
-        <img src="cav.png" alt="Cavalier King Charles Spaniel" />
-    </a>
+    <img src="saint-bernard.png" onclick="loadPage('https://puppies.com/find-a-puppy/saint-bernard?advanced=true&price=100&price=700&sort_breed=mixed')" />
+    <img src="english-bulldog.png" onclick="loadPage('https://puppies.com/find-a-puppy/english-bulldog?advanced=true&price=100&price=700&sort_breed=mixed')" />
+    <img src="basset-hound.png" onclick="loadPage('https://puppies.com/find-a-puppy/basset-hound?advanced=true&price=100&price=700&sort_breed=mixed')" />
+    <img src="cav.png" onclick="loadPage('https://puppies.com/find-a-puppy/cavalier-king-charles-spaniel?advanced=true&price=100&price=700&sort_breed=mixed')" />
 </div>
 
-<div id="content">
-    <h1>Welcome to Puppy Page</h1>
-    <p>Click the puppies on the right to explore available listings.</p>
-</div>
+<script>
+function loadPage(url) {
+    document.getElementById('viewer').src = url;
+}
+</script>
+
 </body>
 </html>
