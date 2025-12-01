@@ -1,63 +1,103 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
 <title>Puppy Page</title>
 <style>
-body {
-    margin: 0;
-    background: #111;
-    color: #fff;
-    font-family: Arial, sans-serif;
-    display: flex;
-}
-#content {
-    flex: 1;
-    padding: 30px;
-}
-#menu {
-    position: fixed;
-    right: 0;
-    top: 0;
-    width: 150px;
-    height: 100vh;
-    background: #222;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding-top: 20px;
-    box-shadow: -3px 0 10px rgba(0,0,0,0.5);
-}
-#menu img {
-    width: 120px;
-    margin: 15px 0;
-    border-radius: 8px;
-    cursor: pointer;
-}
-iframe {
-    width: calc(100% - 150px);
-    height: 100vh;
-    border: none;
-}
+  :root{
+    --bg:#0f0f10;
+    --panel:#1b1b1c;
+    --text:#ffffff;
+  }
+  html,body{
+    height:100%;
+    margin:0;
+    background:var(--bg);
+    color:var(--text);
+    font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial;
+  }
+
+  /* Left fixed menu */
+  #menu{
+    position:fixed;
+    left:0;
+    top:0;
+    bottom:0;
+    width:150px;
+    background:var(--panel);
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    padding:18px 10px;
+    box-shadow:3px 0 12px rgba(0,0,0,0.6);
+    z-index:10;
+  }
+  #menu img{
+    width:120px;
+    height:120px;
+    object-fit:cover;
+    border-radius:8px;
+    margin:10px 0;
+    cursor:pointer;
+    transition:transform .15s ease, box-shadow .15s ease;
+  }
+  #menu img:active{ transform:scale(.98); }
+  #menu img:hover{ transform:translateY(-4px) scale(1.03); box-shadow:0 6px 18px rgba(0,0,0,0.6); }
+
+  /* Page content to the right of the menu */
+  #viewer{
+    position:fixed;
+    left:150px;
+    top:0;
+    right:0;
+    bottom:0;
+    border:0;
+    width:calc(100% - 150px);
+    height:100vh;
+    background:#fff;
+  }
+
+  /* Fallback content header (visible if iframe blocked) */
+  #header{
+    margin-left:170px;
+    padding:24px;
+  }
+
+  /* Small screens: stack */
+  @media (max-width:600px){
+    #menu{ position:relative; width:100%; height:auto; flex-direction:row; padding:12px; gap:8px; }
+    #menu img{ width:64px; height:64px; margin:0; }
+    #viewer{ position:relative; left:0; top:0; width:100%; height:calc(100vh - 84px); }
+    #header{ margin-left:0; padding:12px; }
+  }
 </style>
 </head>
 <body>
+  <nav id="menu" aria-label="Puppy Menu">
+    <img src="saint-bernard.png" alt="Saint Bernard" onclick="loadInView('https://puppies.com/find-a-puppy/saint-bernard?advanced=true&price=100&price=700&sort_breed=mixed')" />
+    <img src="english-bulldog.png" alt="English Bulldog" onclick="loadInView('https://puppies.com/find-a-puppy/english-bulldog?advanced=true&price=100&price=700&sort_breed=mixed')" />
+    <img src="basset-hound.png" alt="Basset Hound" onclick="loadInView('https://puppies.com/find-a-puppy/basset-hound?advanced=true&price=100&price=700&sort_breed=mixed')" />
+    <img src="cav.png" alt="Cavalier King Charles" onclick="loadInView('https://puppies.com/find-a-puppy/cavalier-king-charles-spaniel?advanced=true&price=100&price=700&sort_breed=mixed')" />
+  </nav>
 
-<iframe id="viewer" src=""></iframe>
+  <header id="header">
+    <h1>Welcome to Puppy Page</h1>
+    <p>Click a pup on the left to load the listing directly in this page. No new tabs or windows.</p>
+  </header>
 
-<div id="menu">
-    <img src="saint-bernard.png" onclick="loadPage('https://puppies.com/find-a-puppy/saint-bernard?advanced=true&price=100&price=700&sort_breed=mixed')" />
-    <img src="english-bulldog.png" onclick="loadPage('https://puppies.com/find-a-puppy/english-bulldog?advanced=true&price=100&price=700&sort_breed=mixed')" />
-    <img src="basset-hound.png" onclick="loadPage('https://puppies.com/find-a-puppy/basset-hound?advanced=true&price=100&price=700&sort_breed=mixed')" />
-    <img src="cav.png" onclick="loadPage('https://puppies.com/find-a-puppy/cavalier-king-charles-spaniel?advanced=true&price=100&price=700&sort_breed=mixed')" />
-</div>
+  <iframe id="viewer" title="Puppy viewer" src=""></iframe>
 
 <script>
-function loadPage(url) {
+  function loadInView(url){
+    // load into iframe; keep the left menu visible
     document.getElementById('viewer').src = url;
-}
-</script>
+    // optional: focus iframe for accessibility
+    document.getElementById('viewer').focus();
+  }
 
+  // If you want a default page loaded on open, uncomment and change the URL below:
+  // loadInView('https://puppies.com/find-a-puppy/saint-bernard?advanced=true&price=100&price=700&sort_breed=mixed');
+</script>
 </body>
 </html>
